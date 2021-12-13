@@ -31,4 +31,3 @@ router.get("/:id", placeController.getPlaceByID);
  *         description: Success  
  */
 router.post("/all", placeController.getPlaceAll);
-

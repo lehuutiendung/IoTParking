@@ -29,6 +29,7 @@ app.use(function(req, res, next) {
  * Routes
  */
 app.use('/api/places', require('./app/routes/place.route'));
+app.use('/api/areas', require('./app/routes/area.route'));
 
 /***************************************************************************/
 
