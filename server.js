@@ -30,6 +30,7 @@ app.use(function(req, res, next) {
  */
 app.use('/api/places', require('./app/routes/place.route'));
 app.use('/api/areas', require('./app/routes/area.route'));
+app.use('/api/sensors', require('./app/routes/sensor.route'));
 
 /***************************************************************************/
 
@@ -57,62 +58,59 @@ db.mongoose
  */
 const Place = require('./app/models/place.model');
 const Area = require('./app/models/area.model');
+const Sensor = require('./app/models/sensor.model');
 
 function initial() {
     // // Add area and sensor
-    // for(let i = 0; i < 24; i++){
-    //   new Sensor({
-    //     state: 0
-    //   }).save(err => {
-    //     if (err) {
-    //       console.log("error", err);
-    //     }
-    //     console.log("added successfully sensor");
+    // for(let i = 0; i < 48; i++){
+    //     new Sensor({
+    //       positionNumber: 1,
+    //       state: 0
+    //     }).save(err => {
+    //       if (err) {
+    //         console.log("error", err);
+    //       }
+    //       console.log("added successfully sensor");
+    //     });
+    //   }
+    // for(let i = 0; i < 8; i++){
+    //     Sensor.find({}).limit(6).skip(i*6).exec(function(err, result) {
+    //     let objSensor = [];
+    //     if (err) throw err;
+    //     result.forEach(element => {
+    //       objSensor.push(element._id);
+    //     });
+    //     new Area({
+    //       name: "Khu A",
+    //       data: objSensor
+    //     }).save(err => {
+    //       if (err) {
+    //         console.log("error", err);
+    //       }
+    //       console.log("added successfully area");
+    //     });
     //   });
     // }
 
-    // Sensor.find({}).limit(6).skip(42).exec(function(err, result) {
-    //   let objData = [];
-    //   if (err) throw err;
-    //   console.log(result, result.length);
-    //   result.forEach(element => {
-    //     let data = {
-    //       positionNumber: 1,
-    //       state: element._id
-    //     }
-    //     objData.push(data);
-    //   });
-      
-    //   new Area({
-    //     name: "Khu D",
-    //     data: objData
-    //   }).save(err => {
-    //     if (err) {
-    //       console.log("error", err);
-    //     }
-    //     console.log("added successfully area");
-    //   });
-    // });
-    
-    // // Add place
-    // Area.find({}).limit(4).skip(4).exec(function(err, result) {
-    //   let objData = [];
-    //   if (err) throw err;
-    //   console.log(result);
-    //   result.forEach(element => {
-    //    objData.push(element._id);
-    //   });
-    //   console.log(objData);
-    //   new Place({
-    //     name: "21 Thái Thịnh",
-    //     listArea: objData
-    //   }).save(err => {
-    //     if (err) {
-    //       console.log("error", err);
-    //     }
-    //     console.log("added successfully Place");
-    //   });
-    // }); 
+    //Add place
+    // for(let j = 0; j < 2; j++){
+    //     Area.find({}).limit(4).skip(j*4).exec(function(err, result) {
+    //       let objArea = [];
+    //       if (err) throw err;
+    //       result.forEach(element => {
+    //         objArea.push(element._id);
+    //       });
+    //       new Place({
+    //         name: "21 Thái Thịnh",
+    //         listArea: objArea
+    //       }).save(err => {
+    //         if (err) {
+    //           console.log("error", err);
+    //         }
+    //         console.log("added successfully Place");
+    //       });
+    //     }); 
+    // }
 }
 /***************************************************************************/
 
