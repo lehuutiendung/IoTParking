@@ -11,14 +11,10 @@ const Area = mongoose.model(
         required: true,
     },
     data:[{
-        positionNumber:{
-          type: Number,
-          default: null
-        },
-        state:{
-          type: Number,     //0: Ô trống, 1: Ô đã bị chiếm chỗ
-          default: 0
-        },
+        type: schema.Types.ObjectId,
+        ref: 'Sensor',
+        required: true,
+        trim: true,
     }],
   }, {
     timestamps: true,
