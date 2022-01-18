@@ -1,3 +1,4 @@
+const Sensor = require("../models/sensor.model");
 const AppError = require("../utils/appError");
 
 /**

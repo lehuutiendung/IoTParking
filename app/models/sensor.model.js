@@ -11,7 +11,7 @@ const Sensor = mongoose.model(
             default: null
         },
         state:{
-            type: Number,     //0: Ô trống, 1: Ô đã bị chiếm chỗ
+            type: Number,     //0: Ô trống, 1: Ô đã bị chiếm chỗ, 2: Sensor trong ô khả năng bị hỏng
             default: 0
         },
     }, {

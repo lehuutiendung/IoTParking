@@ -4,6 +4,7 @@ const cors = require("cors");
 const dbConfig = require("./app/config/db.config");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
+const mqtt = require('mqtt');
 
 const app = express();
 require('dotenv').config();
@@ -59,7 +60,7 @@ db.mongoose
 const Place = require('./app/models/place.model');
 const Area = require('./app/models/area.model');
 const Sensor = require('./app/models/sensor.model');
-
+const sensorController = require('./app/controllers/sensor.controller');
 function initial() {
     // // Add area and sensor
     // for(let i = 0; i < 48; i++){
@@ -146,3 +147,46 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
    console.log(`API Document: http://localhost:${PORT}/api-docs/`);
  });
  /***************************************************************************/
+
+/***************************************************************************
+* Connect mqtt
+*/
+const client = mqtt.connect('mqtt://broker.hivemq.com');
+client.on('connect', function(){
+  client.subscribe('esp32');
+  console.log('Client has subcribed successfully');
+})
+
+client.on('message', function(topic, message){
+  try{
+    // PlaceID: 61bc5753b7eb3a77154a27f5 : 21 Thái Thịnh
+    // AreaID: 61bc5598c4e8caf3a8d74efb : Khu A
+    let listBoxID = [
+      '61bc5396382ae4c023abe378',       //Vị trí ô: 1
+      '61bc5396382ae4c023abe377',       //2
+      '61bc5396382ae4c023abe373',       //3
+      '61bc5396382ae4c023abe374',       //4
+      '61bc5396382ae4c023abe375',       //5
+      '61bc5396382ae4c023abe372'        //6
+    ]
+    let markBox = 0;              
+    let dataMessage = JSON.parse(message);
+    Object.keys(dataMessage).forEach(key => {
+        try {
+            let data = {
+              id: listBoxID[markBox],
+              state: dataMessage[key]
+            }
+            sensorController.updateMQTT(data);
+            console.log('Update successfully ' + listBoxID[markBox] + ' with value ' + dataMessage[key]);
+        } catch (error) {
+            throw error;
+        }
+        markBox++;
+    })
+  }catch(e){
+    throw e
+  }
+})
+/***************************************************************************/
+
